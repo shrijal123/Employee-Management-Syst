@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Employee Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #f1f8e9);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #007bff;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        form fieldset {
+            border: 3px solid #dee2e6;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+        
+        form fieldset legend {
+            font-size: 1.5rem;
+            padding: 0 10px;
+            color: #007bff;
+            font-weight: bold;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: #fdfdff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:disabled {
+            background-color: #e9ecef;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+            outline: none;
+        }
+        
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+    
+            input, select, textarea {
+                font-size: 1rem;
+            }
+    
+            button[type="submit"] {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Employee Details</h2>
+        <form action="/employee/update" method="post" id="employeeForm">
+
+            <!-- Personal Details Section -->
+            <fieldset>
+                <legend>Personal Details</legend>
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" value="${employee.fullName}" required>
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" value="${employee.dob}" disabled>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" disabled>
+                    <option value="Male" ${employee.gender == 'Male' ? 'selected' : ''}>Male</option>
+                    <option value="Female" ${employee.gender == 'Female' ? 'selected' : ''}>Female</option>
+                    <option value="Other" ${employee.gender == 'Other' ? 'selected' : ''}>Other</option>
+                </select>
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" value="${employee.age}" max="999" required>
+
+                <label for="currentAddress">Current Address:</label>
+                <input type="text" id="currentAddress1" name="currentAddressLine1" value="${employee.currentAddressLine1}" required>
+                <input type="text" id="currentAddress2" name="currentAddressLine2" value="${employee.currentAddressLine2}" required>
+                <input type="text" id="currentPincode" name="currentPincode" value="${employee.currentPincode}" maxlength="6" pattern="\d{6}" required>
+
+                <label for="permanentAddress">Permanent Address:</label>
+                <input type="text" id="permanentAddress1" name="permanentAddressLine1" value="${employee.permanentAddressLine1}" required>
+                <input type="text" id="permanentAddress2" name="permanentAddressLine2" value="${employee.permanentAddressLine2}" required>
+                <input type="text" id="permanentPincode" name="permanentPincode" value="${employee.permanentPincode}" maxlength="6" pattern="\d{6}" required>
+
+                <label for="personalEmail">Personal Email:</label>
+                <input type="email" id="personalEmail" name="personalEmail" value="${employee.personalEmail}" required>
+
+                <label for="emergencyContact">Emergency Contact No.:</label>
+                <input type="text" id="emergencyContact" name="emergencyContact" value="${employee.emergencyContact}" maxlength="10" pattern="\d{10}" required>
+
+                <label for="mobile">Mobile:</label>
+                <input type="text" id="mobile" name="mobile" value="${employee.mobile}" maxlength="10" pattern="\d{10}" required>
+            </fieldset>
+
+            <!-- Professional Details Section -->
+            <fieldset>
+                <legend>Professional Details</legend>
+                <label for="employeeCode">Employee Code:</label>
+                <input type="text" id="employeeCode" name="employeeCode" value="${employee.employeeCode}" disabled>
+
+                <label for="companyEmail">Company Email:</label>
+                <input type="email" id="companyEmail" name="companyEmail" value="${employee.companyEmail}" disabled>
+
+                <label for="officePhone">Office Phone No.:</label>
+                <input type="text" id="officePhone" name="officePhone" value="${employee.officePhone}" maxlength="12" pattern="\d{8,12}" required>
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" value="${employee.city}" required>
+
+                <label for="officeAddress">Office Address:</label>
+                <input type="text" id="officeAddress1" name="officeAddressLine1" value="${employee.officeAddressLine1}" required>
+                <input type="text" id="officeAddress2" name="officeAddressLine2" value="${employee.officeAddressLine2}" required>
+                <input type="text" id="officePincode" name="officePincode" value="${employee.officePincode}" maxlength="6" pattern="\d{6}" required>
+
+                <label for="reportingManager">Reporting Manager (Code/Email):</label>
+                <input type="text" id="reportingManager" name="reportingManager" value="${employee.reportingManager}" required>
+
+                <label for="hrName">HR Name:</label>
+                <input type="text" id="hrName" name="hrName" value="${employee.hrName}" required>
+
+                <label for="employmentHistory">Employment History:</label>
+                <textarea id="employmentHistory" name="employmentHistory" rows="3" required>${employee.employmentHistory}</textarea>
+
+                <label for="dateOfJoining">Date of Joining:</label>
+                <input type="date" id="dateOfJoining" name="dateOfJoining" value="${employee.dateOfJoining}" disabled>
+            </fieldset>
+
+            <!-- Project Details Section -->
+            <fieldset>
+                <legend>Project Details</legend>
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" value="${employee.startDate}" required>
+
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate" value="${employee.endDate}" required>
+
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" name="projectName" value="${employee.projectName}" required>
+
+                <label for="reportingManagerProject">Reporting Manager (Code/Email):</label>
+                <input type="text" id="reportingManagerProject" name="reportingManagerProject" value="${employee.reportingManagerProject}" required>
+            </fieldset>
+
+                        <!-- Finance Details Section -->
+                        <fieldset>
+                            <legend>Finance Details</legend>
+                            <label for="panCard">PAN Card:</label>
+                            <input type="text" id="panCard" name="panCard" value="${employee.panCard}" required>
+            
+                            <label for="adharCard">Aadhar Card:</label>
+                            <input type="text" id="adharCard" name="adharCard" value="${employee.adharCard}" required>
+            
+                            <label for="bankName">Bank Name:</label>
+                            <input type="text" id="bankName" name="bankName" value="${employee.bankName}" required>
+            
+                            <label for="branch">Branch:</label>
+                            <input type="text" id="branch" name="branch" value="${employee.branch}" required>
+            
+                            <label for="ifscCode">IFSC Code:</label>
+                            <input type="text" id="ifscCode" name="ifscCode" value="${employee.ifscCode}" required>
+            
+                            <label for="ctcBreakup">CTC Breakup:</label>
+                            <textarea id="ctcBreakup" name="ctcBreakup" rows="3" required>${employee.ctcBreakup}</textarea>
+                        </fieldset>
+            
+                        <button type="submit">Update</button>
+                    </form>
+                </div>
+            </body>
+            </html>
+            

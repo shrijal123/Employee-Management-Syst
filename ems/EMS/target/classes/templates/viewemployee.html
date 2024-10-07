@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Employee</title>
+</head>
+<style>
+        body {
+            background: #eef2f5;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .dashboard {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            color: #007BFF;
+            margin-bottom: 15px;
+        }
+
+        .detail {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .detail label {
+            width: 200px;
+            font-weight: bold;
+        }
+
+        .detail span {
+            flex: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 600px) {
+            .detail {
+                flex-direction: column;
+                margin-bottom: 15px;
+            }
+
+            .detail label {
+                width: auto;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+<body>
+	<div class="dashboard">
+	    <h2>Employee Details for <span th:text="${employee.fullName}">Employee Name</span></h2>
+	
+	<div class="section">
+	        <h3>Personal Details</h3>
+	        <div class="detail">
+	            <label>Full Name:</label>
+	            <span th:text="${employee.fullName}"></span>
+	        </div>
+	        <div class="detail">
+	            <label>Date of Birth:</label>
+	            <span th:text="${employee.dateOfBirth}"></span>
+	        </div>
+	        <div class="detail">
+	            <label>Gender:</label>
+	            <span th:text="${employee.gender}"></span>
+	        </div>
+	        <div class="detail">
+	            <label>Personal Email:</label>
+	            <span th:text="${employee.personalMail}"></span>
+	        </div>
+	        <div class="detail">
+	            <label>Mobile:</label>
+	            <span th:text="${employee.mobile}"></span>
+	        </div>
+	        <div class="detail">
+	            <label>Emergency Contact:</label>
+	            <span th:text="${employee.emergencyContactMobile}"></span>
+	        </div>
+	        <div class="detail">
+	            <label>Current Address:</label>
+	            <span th:text="${employee.currentAddressLine1} + ', ' + ${employee.currentAddressLine2} + ', ' + ${employee.currentPincode}"></span>
+	        </div>
+	        <div class="detail">
+	            <label>Permanent Address:</label>
+	            <span th:text="${employee.permanentAddressLine1} + ', ' + ${employee.permanentAddressLine2} + ', ' + ${employee.permanentPincode}"></span>
+	        </div>
+		</div>
+			
+			<div class="section">
+			     <h3>Professional Details</h3>
+			     <div class="detail">
+			         <label>Employment Code:</label>
+			         <span th:text="${employee.employeeCode}"></span>
+			     </div>
+			     <div class="detail">
+			         <label>Company Email:</label>
+			         <span th:text="${employee.companyEmail}"></span>
+			     </div>
+			     <div class="detail">
+			         <label>Password:</label>
+			         <span th:text="${employee.password}"></span>
+			     </div>        
+			     <div class="detail">
+			         <label>Date of Joining:</label>
+			         <span th:text="${employee.dateOfJoining}"></span>
+			     </div>
+			     <div class="detail">
+			         <label>Reporting Manager:</label>
+			         <span th:text="${employee.reportingManager}"></span>
+			     </div>
+			     <div class="detail">
+			         <label>HR Name:</label>
+			         <span th:text="${employee.hrName}"></span>
+			     </div>
+			     <div class="detail">
+			         <label>Employment History:</label>
+			         <span th:text="${employee.employeeHistory}"></span>
+			     </div>
+			 </div>
+			 
+			 <div class="section">
+			         <h3>Project Details</h3>
+			         <div class="detail">
+			             <label>Current Project:</label>
+			             <span th:text="${employee.projectName}"></span>
+			         </div>
+			         <div class="detail">
+			             <label>Start Date:</label>
+			             <span th:text="${employee.startDate}"></span>
+			         </div>
+			         <div class="detail">
+			             <label>End Date:</label>
+			             <span th:text="${employee.endDate}"></span>
+			         </div>
+			         <div class="detail">
+			             <label>Project Reporting Manager:</label>
+			             <span th:text="${employee.projectManager}"></span>
+			         </div>
+			     </div>
+				 
+				 <div class="section">
+				      <h3>Finance Details</h3>
+				      <div class="detail">
+				          <label>PAN Card:</label>
+				          <span th:text="${employee.panCard}"></span>
+				      </div>
+				      <div class="detail">
+				          <label>Aadhar Card:</label>
+				          <span th:text="${employee.aadharCard}"></span>
+				      </div>
+				      <div class="detail">
+				          <label>Bank Name:</label>
+				          <span th:text="${employee.bankName}"></span>
+				      </div>
+				      <div class="detail">
+				          <label>Branch:</label>
+				          <span th:text="${employee.branchName}"></span>
+				      </div>
+				      <div class="detail">
+				          <label>IFSC Code:</label>
+				          <span th:text="${employee.ifscCode}"></span>
+				      </div>
+				      <div class="detail">
+				          <label>CTC Breakup:</label>
+				          <span th:text="${employee.ctcBreakup}"></span>
+				      </div>
+				  </div>
+				  <a class="btn" th:href="@{/admin/dashboard}">Back to Admin Dashboard</a>
+			
+		
+</div>
+
+</body>
+</html>

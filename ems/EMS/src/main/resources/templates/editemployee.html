@@ -1,0 +1,291 @@
+	<!DOCTYPE html>
+	<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Edit Employee Details</title>
+		<style>
+		    * {
+		        margin: 0;
+		        padding: 0;
+		        box-sizing: border-box;
+		    }
+		    
+		    body {
+		        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		        background: linear-gradient(to right, #e3f2fd, #f1f8e9);
+		        padding: 20px;
+		    }
+		    
+		    .container {
+		        max-width: 1000px;
+		        margin: 0 auto;
+		        background-color: #fff;
+		        padding: 30px;
+		        border-radius: 15px;
+		        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+		        transition: transform 0.3s;
+		    }
+		    
+		    h2 {
+		        text-align: center;
+		        margin-bottom: 25px;
+		        color: #007bff;
+		        font-size: 2rem;
+		        font-weight: 700;
+		    }
+		    
+		    form fieldset {
+		        border: 3px solid #dee2e6;
+		        padding: 20px;
+		        margin-bottom: 25px;
+		        border-radius: 10px;
+		        background: #fafafa;
+		    }
+		    
+		    form fieldset legend {
+		        font-size: 1.5rem;
+		        padding: 0 10px;
+		        color: #007bff;
+		        font-weight: bold;
+		    }
+		    
+		    label {
+		        display: block;
+		        margin-bottom: 10px;
+		        font-weight: 600;
+		        color: #333;
+		    }
+		    
+		    input, select, textarea {
+		        width: 100%;
+		        padding: 12px;
+		        margin-bottom: 20px;
+		        border: 1px solid #ced4da;
+		        border-radius: 6px;
+		        font-size: 1rem;
+		        background-color: #fdfdff;
+		        transition: border-color 0.3s, box-shadow 0.3s;
+		    }
+
+		    input:disabled {
+		        background-color: #e9ecef;
+		    }
+		    
+		    input:focus, select:focus, textarea:focus {
+		        border-color: #007bff;
+		        box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+		        outline: none;
+		    }
+		    
+		    button[type="submit"] {
+		        background-color: #007bff;
+		        color: white;
+		        padding: 14px 25px;
+		        border: none;
+		        border-radius: 8px;
+		        cursor: pointer;
+		        font-size: 1.1rem;
+		        width: 100%;
+		        transition: background-color 0.3s;
+		    }
+		    
+		    button[type="submit"]:hover {
+		        background-color: #0056b3;
+		    }
+		    
+		    @media (max-width: 768px) {
+		        .container {
+		            width: 90%;
+		            padding: 15px;
+		        }
+
+		        input, select, textarea {
+		            font-size: 1rem;
+		        }
+
+		        button[type="submit"] {
+		            font-size: 1rem;
+		        }
+		    }
+
+		    button[type="button"] {
+		        background-color: #dc3545;
+		        color: white;
+		        padding: 14px 25px;
+		        border: none;
+		        border-radius: 8px;
+		        cursor: pointer;
+		        font-size: 1.1rem;
+		        width: 100%;
+		        margin-top: 10px;
+		        transition: background-color 0.3s;
+		    }
+
+		    button[type="button"]:hover {
+		        background-color: #a42b37;
+		    }
+		    
+		    @media (max-width: 768px) {
+		        .container {
+		            width: 90%;
+		            padding: 15px;
+		        }
+
+		        input, select, textarea {
+		            font-size: 1rem;
+		        }
+
+		        button[type="submit"] {
+		            font-size: 1rem;
+		        }
+		    }
+		</style>
+	</head>
+	<body>
+	    <div class="container">
+	        <h2>Edit Employee Details</h2>
+	        <form th:action="@{/admin/update/{employeeCode}(employeeCode=${employee.employeeCode})}" method="post" id="employeeForm">
+				<input type="hidden" id="enabled" name="enabled" value="1">
+				<input type="hidden" id="password" name="password" value="${employee.password}">
+			    <input type="hidden" name="role" value="EMPLOYEE">
+	            <!-- Personal Details Section -->
+	            <fieldset>
+	                <legend>Personal Details</legend>
+	                <label for="fullName">Full Name:</label>
+	                <input type="text" id="fullName" name="fullName" th:value="${employee.fullName}" required>
+
+	                <label for="dob">Date of Birth:</label>
+	                <input type="date" id="dateOfBirth" name="dateOfBirth" th:value="${employee.dateOfBirth}" readonly>
+
+	                <label for="gender">Gender:</label>
+	                <select id="gender" name="gender" readonly>
+	                    <option value="Male" th:selected="${employee.gender == 'Male'}">Male</option>
+	                    <option value="Female" th:selected="${employee.gender == 'Female'}">Female</option>
+	                    <option value="Other" th:selected="${employee.gender == 'Other'}">Other</option>
+	                </select>
+
+	                <label for="age">Age:</label>
+	                <input type="number" id="age" name="age" th:value="${employee.age}" max="999" required>
+
+	                <label for="currentAddress">Current Address:</label>
+	                <input type="text" id="currentAddressLine1" name="currentAddressLine1" th:value="${employee.currentAddressLine1}" placeholder="Address Line 1" required>
+	                <input type="text" id="currentAddressLine2" name="currentAddressLine2" th:value="${employee.currentAddressLine2}" placeholder="Address Line 2" required>
+	                <input type="text" id="currentCity" name="currentCity" th:value="${employee.currentCity}" placeholder="Enter your city" required>
+	                <input type="text" id="currentPincode" name="currentPincode" th:value="${employee.currentPincode}" placeholder="Pincode (6 digits)" maxlength="6" pattern="\d{6}" required>
+
+	                <label for="sameAddress" style="display: flex; align-items: center; margin-bottom: 20px;">
+	                    <input type="checkbox" id="sameAddress" onclick="copyCurrentAddress()" style="width: 20px; height: 20px; margin: 10px;">Permanent address is the same as current address
+	                </label>
+
+	                <label for="permanentAddress">Permanent Address:</label>
+	                <input type="text" id="permanentAddressLine1" name="permanentAddressLine1" th:value="${employee.permanentAddressLine1}" placeholder="Address Line 1" required>
+	                <input type="text" id="permanentAddressLine2" name="permanentAddressLine2" th:value="${employee.permanentAddressLine2}" placeholder="Address Line 2" required>
+	                <input type="text" id="permanentCity" name="permanentCity" th:value="${employee.permanentCity}" placeholder="Enter your city" required>
+	                <input type="text" id="permanentPincode" name="permanentPincode" th:value="${employee.permanentPincode}" placeholder="Pincode (6 digits)" maxlength="6" pattern="\d{6}" required>
+
+	                <label for="personalMail">Personal Email:</label>
+	                <input type="email" id="personalMail" name="personalMail" th:value="${employee.personalMail}" required>
+
+	                <label for="emergencyContactMobile">Emergency Contact No.:</label>
+	                <input type="text" id="emergencyContactMobile" name="emergencyContactMobile" th:value="${employee.emergencyContactMobile}" maxlength="10" pattern="\d{10}" required>
+
+	                <label for="mobile">Mobile:</label>
+	                <input type="text" id="mobile" name="mobile" th:value="${employee.mobile}" maxlength="10" pattern="\d{10}" required>
+	            </fieldset>
+
+	            <!-- Professional Details Section -->
+	            <fieldset>
+	                <legend>Professional Details</legend>
+	                <label for="employeeCode">Employee Code:</label>
+	                <input type="text" id="employeeCode" name="employeeCode" th:value="${employee.employeeCode}" readonly>
+
+	                <label for="companyEmail">Company Email:</label>
+	                <input type="email" id="companyEmail" name="companyEmail" th:value="${employee.companyEmail}" readonly>
+
+	                <label for="officeCity">City:</label>
+	                <input type="text" id="officeCity" name="officeCity" th:value="${employee.officeCity}" required>
+
+					<label for="officeAddress">Office Address:</label>
+	                <input type="text" id="officeAddress1" name="officeAddressLine1" th:value="${employee.officeAddressLine1}" required>
+	                <input type="text" id="officeAddress2" name="officeAddressLine2" th:value="${employee.officeAddressLine2}" required>
+	                <input type="text" id="officePincode" name="officePincode" th:value="${employee.officePincode}" maxlength="6" pattern="\d{6}" required>
+
+	                <label for="reportingManager">Reporting Manager (Code/Email):</label>
+	                <input type="text" id="reportingManager" name="reportingManager" th:value="${employee.reportingManager}" required>
+
+	                <label for="hrName">HR Name:</label>
+	                <input type="text" id="hrName" name="hrName" th:value="${employee.hrName}" required>
+
+	                <label for="employeeHistory">Employment History:</label>
+	                <textarea id="employeeHistory" name="employeeHistory" rows="3" required th:text="${employee.employeeHistory}"></textarea>
+
+	                <label for="dateOfJoining">Date of Joining:</label>
+	                <input type="date" id="dateOfJoining" name="dateOfJoining" th:value="${employee.dateOfJoining}" readonly>
+	            </fieldset>
+
+	            <!-- Project Details Section -->
+	            <fieldset>
+	                <legend>Project Details</legend>
+	                <label for="startDate">Start Date:</label>
+	                <input type="date" id="startDate" name="startDate" th:value="${employee.startDate}" required>
+
+	                <label for="endDate">End Date:</label>
+	                <input type="date" id="endDate" name="endDate" th:value="${employee.endDate}" required>
+
+	                <label for="projectName">Project Name:</label>
+	                <input type="text" id="projectName" name="projectName" th:value="${employee.projectName}" required>
+
+	                <label for="projectManager">Reporting Manager (Code/Email):</label>
+	                <input type="text" id="projectManager" name="projectManager" th:value="${employee.projectManager}" required>
+	            </fieldset>
+
+	            <!-- Finance Details Section -->
+	            <fieldset>
+	                <legend>Finance Details</legend>
+	                <label for="panCard">PAN Card:</label>
+	                <input type="text" id="panCard" name="panCard" th:value="${employee.panCard}" required>
+
+	                <label for="aadharCard">Aadhar Card:</label>
+	                <input type="text" id="aadharCard" name="aadharCard" th:value="${employee.aadharCard}" required>
+
+	                <label for="bankName">Bank Name:</label>
+	                <input type="text" id="bankName" name="bankName" th:value="${employee.bankName}" required>
+
+	                <label for="branchName">Branch:</label>
+	                <input type="text" id="branchName" name="branchName" th:value="${employee.branchName}" required>
+
+	                <label for="ifscCode">IFSC Code:</label>
+	                <input type="text" id="ifscCode" name="ifscCode" th:value="${employee.ifscCode}" required>
+
+	                <label for="ctcBreakup">CTC Breakup:</label>
+	                <textarea id="ctcBreakup" name="ctcBreakup" rows="3" required th:text="${employee.ctcBreakup}"></textarea>
+	            </fieldset>
+
+	            <button type="submit" action="/admin/update/{employeeCode}(employeeCode=${employee.employeeCode})">Submit</button>
+	            <button type="button" onclick="redirectToDashboard()">Cancel</button>
+	        </form>
+	    </div>
+
+	    <script>
+	        function copyCurrentAddress() {
+	            const sameAddressCheckbox = document.getElementById('sameAddress');
+	            if (sameAddressCheckbox.checked) {
+	                document.getElementById('permanentAddressLine1').value = document.getElementById('currentAddressLine1').value;
+	                document.getElementById('permanentAddressLine2').value = document.getElementById('currentAddressLine2').value;
+	                document.getElementById('permanentCity').value = document.getElementById('currentCity').value;
+	                document.getElementById('permanentPincode').value = document.getElementById('currentPincode').value;
+	            } else {
+	                document.getElementById('permanentAddressLine1').value = '';
+	                document.getElementById('permanentAddressLine2').value = '';
+	                document.getElementById('permanentCity').value = '';
+	                document.getElementById('permanentPincode').value = '';
+	            }
+	        }
+
+	        function redirectToDashboard() {
+	            window.location.href = "/admin/dashboard";
+	        }
+	    </script>
+	</body>
+	</html>
